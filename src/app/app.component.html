@@ -7,29 +7,50 @@
   <button class="btn btn-outline-success" (click)="openModel()">Add New</button>
     </div>
   </div>
-  <div class="row">
-    <div class="col-3">
-      <div class="card">
-        <div class="card-header">
-          <div class="row">
-            <div class="col-6">
-              Student Name
+
+  @if(studentList.length!==0){
+    <div class="row">
+      @for (item of studentList; track $index) {
+        <div class="col-3">
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-6">
+                  {{item.name}}
+                </div>
+                <div class="col-6 text-end">
+                  {{item.mobileNo}}
+                </div>
+              </div>
             </div>
-            <div class="col-6 text-end">
-              Mobile Number
+            <div class="card-body">
+              <p>{{item.city}}, {{item.state}}, {{item.pincode}}</p>
+              <p>{{item.address}}</p>
+            </div>
+            <div class="card-footer text-center">
+              <div class="row">
+                <div class="col-9">
+                  <p>{{item.email}}</p>
+                </div>
+                <div class="col-3">
+                  <button class="btn btn-sm btn-primary" (click)="onEdit(item)">Edit</button>
+                  <button class="btn btn-sm btn-danger" (click)="onDelete(item)">Delete</button>
+                </div>
+              </div>
+              
             </div>
           </div>
         </div>
-        <div class="card-body">
-          <p>City, State, Pincode</p>
-          <p>Address</p>
-        </div>
-        <div class="card-footer text-center">
-          <p>E-mail</p>
-        </div>
+      }   
+    </div>
+  }@else {
+    <div class="row">
+      <div class="col-12 p-4 text-center">
+        <p>No Record found. Create New Record.</p>
       </div>
     </div>
-  </div>
+  }
+  
 </div>
 
 <div class="modal" id="myModal">
@@ -78,7 +99,11 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" (click)="closeModel()">Close</button>
-        <button type="button" class="btn btn-primary" (click)="saveStudent()">Save</button>
+        @if(studentObj.id == 0){
+          <button type="button" class="btn btn-primary" (click)="saveStudent()">Save</button>
+        }@else {
+          <button type="button" class="btn btn-outline-success" (click)="updateStudent()">Update</button>
+        }
       </div>
     </div>
   </div>
